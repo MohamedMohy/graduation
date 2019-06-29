@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, send_file
+from flask import Flask, url_for, request, send_file, render_template
 from werkzeug import secure_filename
 import skimage.io
 import io
@@ -11,6 +11,7 @@ import pandas as pd
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'Uploads'
+
 @app.route('/upload',methods =['POST'])
 def upload():
     print("request recieved ")
@@ -27,15 +28,9 @@ def upload():
     from runner import run
     result = run(image,filename)
 
-
-   
-    # img = imread(filename)
-   
-    # response= pd.Series(img).to_json(orient='values')
-    # return send_file(filename)
     return send_file("Detected/"+filename)
 
     
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0',port=5000)
 
